@@ -1,29 +1,20 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
 using BepInEx.Logging;
-using Easy_Swap.Utils;
-using HarmonyLib;
 using PluginConfig.API;
 using PluginConfig.API.Fields;
 using UnityEngine;
-using UnityEngine.Windows;
 
 namespace Easy_Swap
 {
-    // TODO Review this file and update to your own requirements.
+  
 
     [BepInPlugin(MyGUID, PluginName, VersionString)]
     public class Easy_SwapPlugin : BaseUnityPlugin
     {
-        // Mod specific details. MyGUID should be unique, and follow the reverse domain pattern
-        // e.g.
-        // com.mynameororg.pluginname
-        // Version should be a valid version string.
-        // e.g.
-        // 1.0.0
+        // Mod Details
         private const string MyGUID = "com.the_cat.Easy_Swap";
         private const string PluginName = "Easy_Swap";
-        private const string VersionString = "1.0.0";
+        private const string VersionString = "1.1.0";
 
 
 
@@ -32,7 +23,13 @@ namespace Easy_Swap
         private PluginConfigurator config;
 
         // Enums
+
         enum Keybinds {
+
+            // Had to make this because the Keycode enum didnt work with plugin configurator.
+            // I still havent added every bind yet to not clutter everything.
+
+
             None = 0,
             A = 97,
             B = 98,
@@ -176,8 +173,7 @@ namespace Easy_Swap
             RocketRed = 53
         }
 
-
-
+       
 
         /// Keybinds \\\
 
@@ -238,14 +234,16 @@ namespace Easy_Swap
         public static ManualLogSource Log = new ManualLogSource(PluginName);
 
         /// <summary>
-        /// Initialise the configuration settings and patch methods
+        /// Initialise the mod.
+        /// 
+        /// Assign the EnumField variables 
         /// </summary>
 
 
         private void Awake()
         {
 
-            Logger.LogInfo($"PluginName: {PluginName}, VersionString: {VersionString} is loading...");
+            Logger.LogInfo($"{PluginName},V{VersionString} is loading...");
 
             //// Plugin Config Init \\\\
 
@@ -253,9 +251,13 @@ namespace Easy_Swap
 
             /// Keybinds \\\
 
-            float ColorValue = 0.7f;
 
-            // Revovler
+
+            float ColorValue = 0.7f; // Adjusts the brightness of the background color for the keybind field
+
+
+
+            // Revovler \\
 
             ConfigPanel RevovlerContainer = new ConfigPanel(config.rootPanel, "Revovler", "revlovPanelES");
 
@@ -270,7 +272,7 @@ namespace Easy_Swap
             RevovlerRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
-            // Shotgun
+            // Shotgun \\
 
             ConfigPanel ShotgunContainer = new ConfigPanel(config.rootPanel, "Shotgun", "ShotPanelES");
 
@@ -285,7 +287,7 @@ namespace Easy_Swap
             ShotgunRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
-            // Nailgun
+            // Nailgun \\
 
             ConfigPanel NailgunContainer = new ConfigPanel(config.rootPanel,"Nailgun","NailPanelES");
 
@@ -293,14 +295,14 @@ namespace Easy_Swap
             NailgunBlue = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Attractor)", "NailES1", Keybinds.None);
             NailgunBlue.fieldColor = new Color(0f, 0f, ColorValue);
 
-            NailgunGreen = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Green)", "NailES2", Keybinds.None);
+            NailgunGreen = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Overheat)", "NailES2", Keybinds.None);
             NailgunGreen.fieldColor = new Color(0f, ColorValue, 0f);
 
             NailgunRed = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Jumpstart)", "NailES3", Keybinds.None);
             NailgunRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
-            // Railcannon
+            // Railcannon \\
 
             ConfigPanel RailcannonContainer = new ConfigPanel(config.rootPanel, "Railcannon", "railPanelES");
 
@@ -315,7 +317,7 @@ namespace Easy_Swap
             RailcannonRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
-            // Rocket Launcher
+            // Rocket Launcher \\
 
             ConfigPanel RocketContainer = new ConfigPanel(config.rootPanel, "Rocket Launcher", "railPanelES");
 
@@ -333,7 +335,7 @@ namespace Easy_Swap
 
             
            
-            Logger.LogInfo($"PluginName: {PluginName}, VersionString: {VersionString} is loaded.");
+            Logger.LogInfo($"{PluginName},V{VersionString} is loaded.");
 
             // Sets up our static Log, so it can be used elsewhere in code.
             // .e.g.
@@ -341,19 +343,20 @@ namespace Easy_Swap
             Log = Logger;
         }
 
-        
+
 
         /// <summary>
-        /// Set the current Gun
+        /// Equip the specified weapon variant with WeaponEnum.
         /// </summary>
         /// <param name="WeaponEnum"></param>
 
 
         private static void SetGun(Guns WeaponEnum)
         {
-
             
-            // Revovler
+            
+            /// Revovler \\\
+            
             if (WeaponEnum == Guns.RevovlerBlue)
             {
                 // Revovler Blue
@@ -370,7 +373,7 @@ namespace Easy_Swap
             else if (WeaponEnum == Guns.RevovlerGreen)
             {
 
-                // Revovler Green
+                // Revovler Green \\\
 
                 int num = 0;
                 if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev1", 0) == 2)
@@ -394,7 +397,10 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverTwirl[num].ToAsset(), true);
             }
 
-            // Shotgun
+
+
+            /// Shotgun \\\
+
             if (WeaponEnum == Guns.ShotgunBlue)
             {
                 // Shotgun Blue
@@ -435,7 +441,10 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunRed[num].ToAsset(), true);
             }
 
-            // Nailgun
+
+
+            /// Nailgun \\\
+            
             if (WeaponEnum == Guns.NailgunBlue)
             {
                 // Nailgun Blue
@@ -476,7 +485,10 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.nailRed[num].ToAsset(), true);
             }
 
-            // Railcannon
+
+
+            /// Railcannon \\\
+
             if (WeaponEnum == Guns.RailBlue)
             {
                 // Railcannon Blue
@@ -517,7 +529,10 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.railMalicious[num].ToAsset(), true);
             }
 
-            // Rocket Launcher
+
+
+            /// Rocket Launcher \\\
+
             if (WeaponEnum == Guns.RocketBlue)
             {
                 // Rocket Launcher Blue
@@ -559,44 +574,42 @@ namespace Easy_Swap
             }
 
 
+
         }
 
-        
+
 
         /// <summary>
-        /// Code executed every frame. See below for an example use case
-        /// to detect keypress via custom configuration.
+        /// Runs Every Frame. 
+        /// 
+        /// Here we check if the player presses any of the keybinds assigned.
         /// </summary>
-        
+
 
         private void Update()
         {
 
-            // Revovler Piercer (BLUE)
+            /// Revovler \\\
+
+            // Piercer (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerBlue.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Revovler BLUE)");
 
                 SetGun(Guns.RevovlerBlue);
 
             }
 
-            // Revovler Marksman (GREEN)
+            // Marksman (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerGreen.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Revovler GREEN)");
 
                 SetGun(Guns.RevovlerGreen);
 
             }
 
-            // Revovler Sharpshooter (RED)
+            // Sharpshooter (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerRed.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Revovler RED)");
 
                 SetGun(Guns.RevovlerRed);
 
@@ -605,32 +618,29 @@ namespace Easy_Swap
 
 
 
+            /// Shotgun \\\
 
-            // Shotgun Core Eject (BLUE)
+
+
+            // Core Eject (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunBlue.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Shotgun BLUE)");
 
                 SetGun(Guns.ShotgunBlue);
 
             }
 
-            // Shotgun Pump (GREEN)
+            // Pump (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunGreen.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Shotgun GREEN)");
 
                 SetGun(Guns.ShotgunGreen);
 
             }
 
-            // Shotgun Sawed On (RED)
+            // Sawed On (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunRed.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Shotgun RED)");
 
                 SetGun(Guns.ShotgunRed);
 
@@ -640,31 +650,29 @@ namespace Easy_Swap
 
 
 
-            // Nailgun Attractor (BLUE)
+            /// Nailgun \\\
+
+
+
+            // Attractor (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)NailgunBlue.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Nailgun BLUE)");
 
                 SetGun(Guns.NailgunBlue);
 
             }
 
-            // Nailgun Attractor (GREEN)
+            // Overheat (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)NailgunGreen.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Nailgun GREEN)");
 
                 SetGun(Guns.NailgunGreen);
 
             }
 
-            // Nailgun Jumpstart (RED)
+            // Jumpstart (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)NailgunRed.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Nailgun RED)");
 
                 SetGun(Guns.NailgunRed);
 
@@ -673,8 +681,11 @@ namespace Easy_Swap
 
 
 
+            /// Railcannon \\\
 
-            // Railcannon Electric (BLUE)
+
+
+            // Electric (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonBlue.value))
             {
 
@@ -684,7 +695,7 @@ namespace Easy_Swap
 
             }
 
-            // Railcannon Screwdriver (GREEN)
+            // Screwdriver (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonGreen.value))
             {
 
@@ -694,7 +705,7 @@ namespace Easy_Swap
 
             }
 
-            // Railcannon Malicious (RED)
+            // Malicious (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonRed.value))
             {
 
@@ -707,8 +718,11 @@ namespace Easy_Swap
 
 
 
+            /// Rocket Launcher \\\
 
-            // Rocket Launcher Freezeframe (BLUE)
+
+
+            // Freezeframe (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketBlue.value))
             {
 
@@ -718,7 +732,7 @@ namespace Easy_Swap
 
             }
 
-            // Rocket Launcher S.R.S (GREEN)
+            // S.R.S (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketGreen.value))
             {
 
@@ -728,7 +742,7 @@ namespace Easy_Swap
 
             }
 
-            // Rocket Launcher Firestarter (RED)
+            // Firestarter (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketRed.value))
             {
 
