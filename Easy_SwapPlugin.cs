@@ -2,6 +2,8 @@
 using BepInEx.Logging;
 using PluginConfig.API;
 using PluginConfig.API.Fields;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 namespace Easy_Swap
@@ -12,10 +14,11 @@ namespace Easy_Swap
     public class Easy_SwapPlugin : BaseUnityPlugin
     {
         // Mod Details
+
         private const string MyGUID = "com.the_cat.Easy_Swap";
         private const string PluginName = "Easy_Swap";
-        private const string VersionString = "1.1.0";
-
+        private const string VersionString = "1.3.0";
+        
 
 
         // Plugin Config
@@ -24,6 +27,7 @@ namespace Easy_Swap
 
         // Enums
 
+        #region
         enum Keybinds {
 
             // Had to make this because the Keycode enum didnt work with plugin configurator.
@@ -147,6 +151,19 @@ namespace Easy_Swap
             Underscore = 95,
             BackQuote = 96,
 
+            Tilde = 126,
+            Numlock = 300,
+            CapsLock = 301,
+            ScrollLock = 302,
+            RightShift = 303,
+            LeftShift = 304,
+            RightControl = 305,
+            LeftControl = 306,
+            RightAlt = 307,
+            LeftAlt = 308,
+            LeftWindows = 311,
+            RightWindows = 312,
+
         };
 
 
@@ -173,11 +190,11 @@ namespace Easy_Swap
             RocketRed = 53
         }
 
-       
+        #endregion
 
         /// Keybinds \\\
 
-
+        #region
 
         // Revovler
 
@@ -223,15 +240,15 @@ namespace Easy_Swap
 
         EnumField<Keybinds> RocketRed;
 
+        #endregion
 
 
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+        public static string DefaultParentFolder = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
 
         public static ManualLogSource Log = new ManualLogSource(PluginName);
+
+
 
         /// <summary>
         /// Initialise the mod.
@@ -239,9 +256,11 @@ namespace Easy_Swap
         /// Assign the EnumField variables 
         /// </summary>
 
-
+        
         private void Awake()
         {
+
+            
 
             Logger.LogInfo($"{PluginName},V{VersionString} is loading...");
 
@@ -249,9 +268,13 @@ namespace Easy_Swap
 
             config = PluginConfigurator.Create("Easy Swap", MyGUID);
 
+
+
+            config.SetIconWithURL($"{Path.Combine(DefaultParentFolder, "icon.png")}");
+
             /// Keybinds \\\
 
-
+            #region
 
             float ColorValue = 0.7f; // Adjusts the brightness of the background color for the keybind field
 
@@ -331,10 +354,10 @@ namespace Easy_Swap
             RocketRed = new EnumField<Keybinds>(RocketContainer, "Rocket (Firestarter)", "RocketES3", Keybinds.None);
             RocketRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
+            #endregion
 
 
-            
-           
+
             Logger.LogInfo($"{PluginName},V{VersionString} is loaded.");
 
             // Sets up our static Log, so it can be used elsewhere in code.
@@ -346,17 +369,19 @@ namespace Easy_Swap
 
 
         /// <summary>
-        /// Equip the specified weapon variant with WeaponEnum.
+        /// Equip the specified weapon (plus variant)
         /// </summary>
         /// <param name="WeaponEnum"></param>
 
 
-        private static void SetGun(Guns WeaponEnum)
+        private static void EquipWeapon(Guns WeaponEnum)
         {
-            
-            
+
+
             /// Revovler \\\
-            
+
+            #region
+
             if (WeaponEnum == Guns.RevovlerBlue)
             {
                 // Revovler Blue
@@ -397,9 +422,11 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverTwirl[num].ToAsset(), true);
             }
 
-
+            #endregion
 
             /// Shotgun \\\
+
+            #region
 
             if (WeaponEnum == Guns.ShotgunBlue)
             {
@@ -441,10 +468,13 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunRed[num].ToAsset(), true);
             }
 
+            #endregion
 
 
             /// Nailgun \\\
-            
+
+            #region
+
             if (WeaponEnum == Guns.NailgunBlue)
             {
                 // Nailgun Blue
@@ -485,9 +515,11 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.nailRed[num].ToAsset(), true);
             }
 
-
+            #endregion
 
             /// Railcannon \\\
+
+            #region
 
             if (WeaponEnum == Guns.RailBlue)
             {
@@ -529,9 +561,11 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.railMalicious[num].ToAsset(), true);
             }
 
-
+            #endregion
 
             /// Rocket Launcher \\\
+
+            #region
 
             if (WeaponEnum == Guns.RocketBlue)
             {
@@ -573,7 +607,7 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.rocketRed[num].ToAsset(), true);
             }
 
-
+            #endregion
 
         }
 
@@ -591,42 +625,48 @@ namespace Easy_Swap
 
             /// Revovler \\\
 
+            #region
+
             // Piercer (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerBlue.value))
             {
 
-                SetGun(Guns.RevovlerBlue);
+                EquipWeapon(Guns.RevovlerBlue);
 
             }
+
+            
 
             // Marksman (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerGreen.value))
             {
 
-                SetGun(Guns.RevovlerGreen);
+                EquipWeapon(Guns.RevovlerGreen);
 
             }
+
+            
 
             // Sharpshooter (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerRed.value))
             {
 
-                SetGun(Guns.RevovlerRed);
+                EquipWeapon(Guns.RevovlerRed);
 
             }
 
-
+            #endregion
 
 
             /// Shotgun \\\
 
-
+            #region
 
             // Core Eject (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunBlue.value))
             {
 
-                SetGun(Guns.ShotgunBlue);
+                EquipWeapon(Guns.ShotgunBlue);
 
             }
 
@@ -634,7 +674,7 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunGreen.value))
             {
 
-                SetGun(Guns.ShotgunGreen);
+                EquipWeapon(Guns.ShotgunGreen);
 
             }
 
@@ -642,23 +682,23 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunRed.value))
             {
 
-                SetGun(Guns.ShotgunRed);
+                EquipWeapon(Guns.ShotgunRed);
 
             }
 
 
-
+            #endregion
 
 
             /// Nailgun \\\
 
-
+            #region
 
             // Attractor (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)NailgunBlue.value))
             {
 
-                SetGun(Guns.NailgunBlue);
+                EquipWeapon(Guns.NailgunBlue);
 
             }
 
@@ -666,7 +706,7 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)NailgunGreen.value))
             {
 
-                SetGun(Guns.NailgunGreen);
+                EquipWeapon(Guns.NailgunGreen);
 
             }
 
@@ -674,16 +714,16 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)NailgunRed.value))
             {
 
-                SetGun(Guns.NailgunRed);
+                EquipWeapon(Guns.NailgunRed);
 
             }
 
-
+            #endregion
 
 
             /// Railcannon \\\
 
-
+            #region
 
             // Electric (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonBlue.value))
@@ -691,7 +731,7 @@ namespace Easy_Swap
 
                 Logger.LogInfo("Keypress detected! (Railcannon BLUE)");
 
-                SetGun(Guns.RailBlue);
+                EquipWeapon(Guns.RailBlue);
 
             }
 
@@ -701,7 +741,7 @@ namespace Easy_Swap
 
                 Logger.LogInfo("Keypress detected! (Railcannon GREEN)");
 
-                SetGun(Guns.RailGreen);
+                EquipWeapon(Guns.RailGreen);
 
             }
 
@@ -711,16 +751,17 @@ namespace Easy_Swap
 
                 Logger.LogInfo("Keypress detected! (Railcannon RED)");
 
-                SetGun(Guns.RailRed);
+                EquipWeapon(Guns.RailRed);
 
             }
 
 
+            #endregion
 
 
             /// Rocket Launcher \\\
 
-
+            #region
 
             // Freezeframe (BLUE)
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketBlue.value))
@@ -728,7 +769,7 @@ namespace Easy_Swap
 
                 Logger.LogInfo("Keypress detected! (Rocket Launcher BLUE)");
 
-                SetGun(Guns.RocketBlue);
+                EquipWeapon(Guns.RocketBlue);
 
             }
 
@@ -738,7 +779,7 @@ namespace Easy_Swap
 
                 Logger.LogInfo("Keypress detected! (Rocket Launcher GREEN)");
 
-                SetGun(Guns.RocketGreen);
+                EquipWeapon(Guns.RocketGreen);
 
             }
 
@@ -748,9 +789,12 @@ namespace Easy_Swap
 
                 Logger.LogInfo("Keypress detected! (Rocket Launcher RED)");
 
-                SetGun(Guns.RocketRed);
+                EquipWeapon(Guns.RocketRed);
 
             }
+
+
+            #endregion
 
         }
 
