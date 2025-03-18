@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Easy_Swap
 {
-  
+
 
     [BepInPlugin(MyGUID, PluginName, VersionString)]
     public class Easy_SwapPlugin : BaseUnityPlugin
@@ -17,8 +17,8 @@ namespace Easy_Swap
 
         private const string MyGUID = "com.the_cat.Easy_Swap";
         private const string PluginName = "Easy_Swap";
-        private const string VersionString = "1.3.0";
-        
+        private const string VersionString = "1.2.2";
+
 
 
         // Plugin Config
@@ -26,145 +26,6 @@ namespace Easy_Swap
         private PluginConfigurator config;
 
         // Enums
-
-        #region
-        enum Keybinds {
-
-            // Had to make this because the Keycode enum didnt work with plugin configurator.
-            // I still havent added every bind yet to not clutter everything.
-
-
-            None = 0,
-            A = 97,
-            B = 98,
-            C = 99,
-            D = 100,
-            E = 101,
-            F = 102,
-            G = 103,
-            H = 104,
-            I = 105,
-            J = 106,
-            K = 107,
-            L = 108,
-            M = 109,
-            N = 110,
-            O = 111,
-            P = 112,
-            Q = 113,
-            R = 114,
-            S = 115,
-            T = 116,
-            U = 117,
-            V = 118,
-            W = 119,
-            X = 120,
-            Y = 121,
-            Z = 122,
-
-
-            Backspace = 8,
-            Delete = 127,
-            Tab = 9,
-            Clear = 12,
-            Return = 13,
-            Pause = 19,
-            Escape = 27,
-            Space = 32,
-            Keypad0 = 256,
-            Keypad1 = 257,
-            Keypad2 = 258,
-            Keypad3 = 259,
-            Keypad4 = 260,
-            Keypad5 = 261,
-            Keypad6 = 262,
-            Keypad7 = 263,
-            Keypad8 = 264,
-            Keypad9 = 265,
-            KeypadPeriod = 266,
-            KeypadDivide = 267,
-            KeypadMultiply = 268,
-            KeypadMinus = 269,
-            KeypadPlus = 270,
-            KeypadEnter = 271,
-            KeypadEquals = 272,
-            UpArrow = 273,
-            DownArrow = 274,
-            RightArrow = 275,
-            LeftArrow = 276,
-            Insert = 277,
-            Home = 278,
-            End = 279,
-            PageUp = 280,
-            PageDown = 281,
-            F1 = 282,
-            F2 = 283,
-            F3 = 284,
-            F4 = 285,
-            F5 = 286,
-            F6 = 287,
-            F7 = 288,
-            F8 = 289,
-            F9 = 290,
-            F10 = 291,
-            F11 = 292,
-            F12 = 293,
-            F13 = 294,
-            F14 = 295,
-            F15 = 296,
-            Alpha0 = 48,
-            Alpha1 = 49,
-            Alpha2 = 50,
-            Alpha3 = 51,
-            Alpha4 = 52,
-            Alpha5 = 53,
-            Alpha6 = 54,
-            Alpha7 = 55,
-            Alpha8 = 56,
-            Alpha9 = 57,
-            Exclaim = 33,
-            DoubleQuote = 34,
-            Hash = 35,
-            Dollar = 36,
-            Percent = 37,
-            Ampersand = 38,
-            Quote = 39,
-            LeftParen = 40,
-            RightParen = 41,
-            Asterisk = 42,
-            Plus = 43,
-            Comma = 44,
-            Minus = 45,
-            Period = 46,
-            Slash = 47,
-            Colon = 58,
-            Semicolon = 59,
-            Less = 60,
-            Equals = 61,
-            Greater = 62,
-            Question = 63,
-            At = 64,
-            LeftBracket = 91,
-            Backslash = 92,
-            RightBracket = 93,
-            Caret = 94,
-            Underscore = 95,
-            BackQuote = 96,
-
-            Tilde = 126,
-            Numlock = 300,
-            CapsLock = 301,
-            ScrollLock = 302,
-            RightShift = 303,
-            LeftShift = 304,
-            RightControl = 305,
-            LeftControl = 306,
-            RightAlt = 307,
-            LeftAlt = 308,
-            LeftWindows = 311,
-            RightWindows = 312,
-
-        };
 
 
         enum Guns
@@ -179,7 +40,7 @@ namespace Easy_Swap
 
             NailgunBlue = 31,
             NailgunGreen = 32,
-            NailgunRed = 33, 
+            NailgunRed = 33,
 
             RailBlue = 41,
             RailGreen = 42,
@@ -190,7 +51,6 @@ namespace Easy_Swap
             RocketRed = 53
         }
 
-        #endregion
 
         /// Keybinds \\\
 
@@ -198,47 +58,47 @@ namespace Easy_Swap
 
         // Revovler
 
-        EnumField<Keybinds> RevovlerBlue;
+        KeyCodeField RevovlerBlue;
 
-        EnumField<Keybinds> RevovlerGreen;
+        KeyCodeField RevovlerGreen;
 
-        EnumField<Keybinds> RevovlerRed;
+        KeyCodeField RevovlerRed;
 
 
         // Shotgun
 
-        EnumField<Keybinds> ShotgunBlue;
+        KeyCodeField ShotgunBlue;
 
-        EnumField<Keybinds> ShotgunGreen;
+        KeyCodeField ShotgunGreen;
 
-        EnumField<Keybinds> ShotgunRed;
+        KeyCodeField ShotgunRed;
 
 
         // Nailgun
 
-        EnumField<Keybinds> NailgunBlue;
+        KeyCodeField NailgunBlue;
 
-        EnumField<Keybinds> NailgunGreen;
+        KeyCodeField NailgunGreen;
 
-        EnumField<Keybinds> NailgunRed;
+        KeyCodeField NailgunRed;
 
 
         // Railcannon
 
-        EnumField<Keybinds> RailcannonBlue;
+        KeyCodeField RailcannonBlue;
 
-        EnumField<Keybinds> RailcannonGreen;
+        KeyCodeField RailcannonGreen;
 
-        EnumField<Keybinds> RailcannonRed;
+        KeyCodeField RailcannonRed;
 
 
         // Rocket Launcher
 
-        EnumField<Keybinds> RocketBlue;
+        KeyCodeField RocketBlue;
 
-        EnumField<Keybinds> RocketGreen;
+        KeyCodeField RocketGreen;
 
-        EnumField<Keybinds> RocketRed;
+        KeyCodeField RocketRed;
 
         #endregion
 
@@ -251,16 +111,17 @@ namespace Easy_Swap
 
 
         /// <summary>
-        /// Initialise the mod.
+        /// Initialize the mod and PluginConfigurator.
         /// 
-        /// Assign the EnumField variables 
+        /// 
+        /// Assign the Keycode variables 
         /// </summary>
 
-        
+
         private void Awake()
         {
 
-            
+
 
             Logger.LogInfo($"{PluginName},V{VersionString} is loading...");
 
@@ -285,13 +146,13 @@ namespace Easy_Swap
             ConfigPanel RevovlerContainer = new ConfigPanel(config.rootPanel, "Revovler", "revlovPanelES");
 
 
-            RevovlerBlue = new EnumField<Keybinds>(RevovlerContainer, "Revovler (Piercer)", "RevlovES1", Keybinds.None);
+            RevovlerBlue = new KeyCodeField(RevovlerContainer, "Revovler (Piercer)", "RevlovES1", KeyCode.None);
             RevovlerBlue.fieldColor = new Color(0f, 0f, ColorValue);
 
-            RevovlerGreen = new EnumField<Keybinds>(RevovlerContainer, "Revovler (Marksman)", "RevlovES2", Keybinds.None);
+            RevovlerGreen = new KeyCodeField(RevovlerContainer, "Revovler (Marksman)", "RevlovES2", KeyCode.None);
             RevovlerGreen.fieldColor = new Color(0f, ColorValue, 0f);
 
-            RevovlerRed = new EnumField<Keybinds>(RevovlerContainer, "Revovler (Sharpshooter)", "RevlovES3", Keybinds.None);
+            RevovlerRed = new KeyCodeField(RevovlerContainer, "Revovler (Sharpshooter)", "RevlovES3", KeyCode.None);
             RevovlerRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
@@ -300,28 +161,28 @@ namespace Easy_Swap
             ConfigPanel ShotgunContainer = new ConfigPanel(config.rootPanel, "Shotgun", "ShotPanelES");
 
 
-            ShotgunBlue = new EnumField<Keybinds>(ShotgunContainer, "Shotgun (Core Eject)", "ShotES1", Keybinds.None);
+            ShotgunBlue = new KeyCodeField(ShotgunContainer, "Shotgun (Core Eject)", "ShotES1", KeyCode.None);
             ShotgunBlue.fieldColor = new Color(0f, 0f, ColorValue);
 
-            ShotgunGreen = new EnumField<Keybinds>(ShotgunContainer, "Shotgun (Pump)", "ShotES2", Keybinds.None);
+            ShotgunGreen = new KeyCodeField(ShotgunContainer, "Shotgun (Pump)", "ShotES2", KeyCode.None);
             ShotgunGreen.fieldColor = new Color(0f, ColorValue, 0f);
 
-            ShotgunRed = new EnumField<Keybinds>(ShotgunContainer, "Shotgun (Sawed On)", "ShotES3", Keybinds.None);
+            ShotgunRed = new KeyCodeField(ShotgunContainer, "Shotgun (Sawed On)", "ShotES3", KeyCode.None);
             ShotgunRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
             // Nailgun \\
 
-            ConfigPanel NailgunContainer = new ConfigPanel(config.rootPanel,"Nailgun","NailPanelES");
+            ConfigPanel NailgunContainer = new ConfigPanel(config.rootPanel, "Nailgun", "NailPanelES");
 
 
-            NailgunBlue = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Attractor)", "NailES1", Keybinds.None);
+            NailgunBlue = new KeyCodeField(NailgunContainer, "Nailgun (Attractor)", "NailES1", KeyCode.None);
             NailgunBlue.fieldColor = new Color(0f, 0f, ColorValue);
 
-            NailgunGreen = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Overheat)", "NailES2", Keybinds.None);
+            NailgunGreen = new KeyCodeField(NailgunContainer, "Nailgun (Overheat)", "NailES2", KeyCode.None);
             NailgunGreen.fieldColor = new Color(0f, ColorValue, 0f);
 
-            NailgunRed = new EnumField<Keybinds>(NailgunContainer, "Nailgun (Jumpstart)", "NailES3", Keybinds.None);
+            NailgunRed = new KeyCodeField(NailgunContainer, "Nailgun (Jumpstart)", "NailES3", KeyCode.None);
             NailgunRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
@@ -330,13 +191,13 @@ namespace Easy_Swap
             ConfigPanel RailcannonContainer = new ConfigPanel(config.rootPanel, "Railcannon", "railPanelES");
 
 
-            RailcannonBlue = new EnumField<Keybinds>(RailcannonContainer, "Railcannon (Electric)", "RailES1", Keybinds.None);
+            RailcannonBlue = new KeyCodeField(RailcannonContainer, "Railcannon (Electric)", "RailES1", KeyCode.None);
             RailcannonBlue.fieldColor = new Color(0f, 0f, ColorValue);
 
-            RailcannonGreen = new EnumField<Keybinds>(RailcannonContainer, "Railcannon (Screwdriver)", "RailES2", Keybinds.None);
+            RailcannonGreen = new KeyCodeField(RailcannonContainer, "Railcannon (Screwdriver)", "RailES2", KeyCode.None);
             RailcannonGreen.fieldColor = new Color(0f, ColorValue, 0f);
 
-            RailcannonRed = new EnumField<Keybinds>(RailcannonContainer, "Railcannon (Malicious)", "RailES3", Keybinds.None);
+            RailcannonRed = new KeyCodeField(RailcannonContainer, "Railcannon (Malicious)", "RailES3", KeyCode.None);
             RailcannonRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
 
@@ -345,13 +206,13 @@ namespace Easy_Swap
             ConfigPanel RocketContainer = new ConfigPanel(config.rootPanel, "Rocket Launcher", "railPanelES");
 
 
-            RocketBlue = new EnumField<Keybinds>(RocketContainer, "Rocket (Freeze Frame)", "RocketES1", Keybinds.None);
-            RocketBlue.fieldColor = new Color(0f,0f, ColorValue);
+            RocketBlue = new KeyCodeField(RocketContainer, "Rocket (Freeze Frame)", "RocketES1", KeyCode.None);
+            RocketBlue.fieldColor = new Color(0f, 0f, ColorValue);
 
-            RocketGreen = new EnumField<Keybinds>(RocketContainer, "Rocket (S.R.S)", "RocketlES2", Keybinds.None);
+            RocketGreen = new KeyCodeField(RocketContainer, "Rocket (S.R.S)", "RocketlES2", KeyCode.None);
             RocketGreen.fieldColor = new Color(0f, ColorValue, 0f);
 
-            RocketRed = new EnumField<Keybinds>(RocketContainer, "Rocket (Firestarter)", "RocketES3", Keybinds.None);
+            RocketRed = new KeyCodeField(RocketContainer, "Rocket (Firestarter)", "RocketES3", KeyCode.None);
             RocketRed.fieldColor = new Color(ColorValue, 0f, 0f);
 
             #endregion
@@ -394,7 +255,7 @@ namespace Easy_Swap
 
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverPierce[num].ToAsset(), true);
 
-            } 
+            }
             else if (WeaponEnum == Guns.RevovlerGreen)
             {
 
@@ -635,7 +496,7 @@ namespace Easy_Swap
 
             }
 
-            
+
 
             // Marksman (GREEN)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerGreen.value))
@@ -645,7 +506,7 @@ namespace Easy_Swap
 
             }
 
-            
+
 
             // Sharpshooter (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerRed.value))
@@ -729,8 +590,6 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonBlue.value))
             {
 
-                Logger.LogInfo("Keypress detected! (Railcannon BLUE)");
-
                 EquipWeapon(Guns.RailBlue);
 
             }
@@ -739,8 +598,6 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonGreen.value))
             {
 
-                Logger.LogInfo("Keypress detected! (Railcannon GREEN)");
-
                 EquipWeapon(Guns.RailGreen);
 
             }
@@ -748,8 +605,6 @@ namespace Easy_Swap
             // Malicious (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonRed.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Railcannon RED)");
 
                 EquipWeapon(Guns.RailRed);
 
@@ -767,8 +622,6 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketBlue.value))
             {
 
-                Logger.LogInfo("Keypress detected! (Rocket Launcher BLUE)");
-
                 EquipWeapon(Guns.RocketBlue);
 
             }
@@ -777,8 +630,6 @@ namespace Easy_Swap
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketGreen.value))
             {
 
-                Logger.LogInfo("Keypress detected! (Rocket Launcher GREEN)");
-
                 EquipWeapon(Guns.RocketGreen);
 
             }
@@ -786,8 +637,6 @@ namespace Easy_Swap
             // Firestarter (RED)
             if (UnityInput.Current.GetKeyDown((KeyCode)RocketRed.value))
             {
-
-                Logger.LogInfo("Keypress detected! (Rocket Launcher RED)");
 
                 EquipWeapon(Guns.RocketRed);
 
