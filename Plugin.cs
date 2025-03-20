@@ -11,7 +11,7 @@ namespace Easy_Swap
 
 
     [BepInPlugin(MyGUID, PluginName, VersionString)]
-    public class Easy_SwapPlugin : BaseUnityPlugin
+    public class Plugin : BaseUnityPlugin
     {
         // Mod Details
 
@@ -424,7 +424,7 @@ namespace Easy_Swap
 
             #endregion
 
-            /// Rocket Launcher \\\
+            /// Rocket Launcher \\\ 
 
             #region
 
@@ -484,166 +484,176 @@ namespace Easy_Swap
         private void Update()
         {
 
-            /// Revovler \\\
+            if (!MonoSingleton<OptionsManager>.Instance.inIntro && !MonoSingleton<OptionsManager>.Instance.paused && !MonoSingleton<NewMovement>.Instance.dead)
 
-            #region
-
-            // Piercer (BLUE)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerBlue.value))
             {
 
-                EquipWeapon(Guns.RevovlerBlue);
+                /// Revovler \\\
+
+                #region
+
+                // Piercer (BLUE)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerBlue.value))
+                {
+
+                    EquipWeapon(Guns.RevovlerBlue);
+
+                }
+
+
+
+                // Marksman (GREEN)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerGreen.value))
+                {
+
+                    EquipWeapon(Guns.RevovlerGreen);
+
+                }
+
+
+
+                // Sharpshooter (RED)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerRed.value))
+                {
+
+                    EquipWeapon(Guns.RevovlerRed);
+
+                }
+
+                #endregion
+
+
+                /// Shotgun \\\
+
+                #region
+
+                // Core Eject (BLUE)
+                if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunBlue.value))
+                {
+
+                    EquipWeapon(Guns.ShotgunBlue);
+
+                }
+
+                // Pump (GREEN)
+                if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunGreen.value))
+                {
+
+                    EquipWeapon(Guns.ShotgunGreen);
+
+                }
+
+                // Sawed On (RED)
+                if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunRed.value))
+                {
+
+                    EquipWeapon(Guns.ShotgunRed);
+
+                }
+
+
+                #endregion
+
+
+                /// Nailgun \\\
+
+                #region
+
+                // Attractor (BLUE)
+                if (UnityInput.Current.GetKeyDown((KeyCode)NailgunBlue.value))
+                {
+
+                    EquipWeapon(Guns.NailgunBlue);
+
+                }
+
+                // Overheat (GREEN)
+                if (UnityInput.Current.GetKeyDown((KeyCode)NailgunGreen.value))
+                {
+
+                    EquipWeapon(Guns.NailgunGreen);
+
+                }
+
+                // Jumpstart (RED)
+                if (UnityInput.Current.GetKeyDown((KeyCode)NailgunRed.value))
+                {
+
+                    EquipWeapon(Guns.NailgunRed);
+
+                }
+
+                #endregion
+
+
+                /// Railcannon \\\
+
+                #region
+
+                // Electric (BLUE)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonBlue.value))
+                {
+
+                    EquipWeapon(Guns.RailBlue);
+
+                }
+
+                // Screwdriver (GREEN)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonGreen.value))
+                {
+
+                    EquipWeapon(Guns.RailGreen);
+
+                }
+
+                // Malicious (RED)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonRed.value))
+                {
+
+                    EquipWeapon(Guns.RailRed);
+
+                }
+
+
+                #endregion
+
+
+                /// Rocket Launcher \\\
+
+                #region
+
+                // Freezeframe (BLUE)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RocketBlue.value))
+                {
+
+                    EquipWeapon(Guns.RocketBlue);
+
+                }
+
+                // S.R.S (GREEN)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RocketGreen.value))
+                {
+
+                    EquipWeapon(Guns.RocketGreen);
+
+                }
+
+                // Firestarter (RED)
+                if (UnityInput.Current.GetKeyDown((KeyCode)RocketRed.value))
+                {
+
+                    EquipWeapon(Guns.RocketRed);
+
+                }
+
+
+                #endregion
+
 
             }
 
 
 
-            // Marksman (GREEN)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerGreen.value))
-            {
-
-                EquipWeapon(Guns.RevovlerGreen);
-
-            }
-
-
-
-            // Sharpshooter (RED)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RevovlerRed.value))
-            {
-
-                EquipWeapon(Guns.RevovlerRed);
-
-            }
-
-            #endregion
-
-
-            /// Shotgun \\\
-
-            #region
-
-            // Core Eject (BLUE)
-            if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunBlue.value))
-            {
-
-                EquipWeapon(Guns.ShotgunBlue);
-
-            }
-
-            // Pump (GREEN)
-            if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunGreen.value))
-            {
-
-                EquipWeapon(Guns.ShotgunGreen);
-
-            }
-
-            // Sawed On (RED)
-            if (UnityInput.Current.GetKeyDown((KeyCode)ShotgunRed.value))
-            {
-
-                EquipWeapon(Guns.ShotgunRed);
-
-            }
-
-
-            #endregion
-
-
-            /// Nailgun \\\
-
-            #region
-
-            // Attractor (BLUE)
-            if (UnityInput.Current.GetKeyDown((KeyCode)NailgunBlue.value))
-            {
-
-                EquipWeapon(Guns.NailgunBlue);
-
-            }
-
-            // Overheat (GREEN)
-            if (UnityInput.Current.GetKeyDown((KeyCode)NailgunGreen.value))
-            {
-
-                EquipWeapon(Guns.NailgunGreen);
-
-            }
-
-            // Jumpstart (RED)
-            if (UnityInput.Current.GetKeyDown((KeyCode)NailgunRed.value))
-            {
-
-                EquipWeapon(Guns.NailgunRed);
-
-            }
-
-            #endregion
-
-
-            /// Railcannon \\\
-
-            #region
-
-            // Electric (BLUE)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonBlue.value))
-            {
-
-                EquipWeapon(Guns.RailBlue);
-
-            }
-
-            // Screwdriver (GREEN)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonGreen.value))
-            {
-
-                EquipWeapon(Guns.RailGreen);
-
-            }
-
-            // Malicious (RED)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RailcannonRed.value))
-            {
-
-                EquipWeapon(Guns.RailRed);
-
-            }
-
-
-            #endregion
-
-
-            /// Rocket Launcher \\\
-
-            #region
-
-            // Freezeframe (BLUE)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RocketBlue.value))
-            {
-
-                EquipWeapon(Guns.RocketBlue);
-
-            }
-
-            // S.R.S (GREEN)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RocketGreen.value))
-            {
-
-                EquipWeapon(Guns.RocketGreen);
-
-            }
-
-            // Firestarter (RED)
-            if (UnityInput.Current.GetKeyDown((KeyCode)RocketRed.value))
-            {
-
-                EquipWeapon(Guns.RocketRed);
-
-            }
-
-
-            #endregion
 
         }
 
