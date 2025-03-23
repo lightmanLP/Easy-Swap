@@ -80,6 +80,7 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Swap.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

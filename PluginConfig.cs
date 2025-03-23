@@ -1,5 +1,4 @@
-﻿using GameConsole.pcon;
-using PluginConfig.API;
+﻿using PluginConfig.API;
 using PluginConfig.API.Fields;
 using System.IO;
 using UnityEngine;
@@ -60,13 +59,15 @@ namespace Easy_Swap
 
         #endregion
 
+
+        // Initialize the Plugin Config
         public static void InitConfig()
         {
             var config = PluginConfigurator.Create("Easy Swap", Plugin.GUID);
             config.SetIconWithURL($"{Path.Combine(Easy_Swap.Plugin.AssemblyFolder, "icon.png")}");
 
             
-            /// Keybinds \\\
+            /// Setting Keybinds \\\
 
             #region
 
@@ -100,7 +101,7 @@ namespace Easy_Swap
             ShotgunGreen.fieldColor = variantColors[1];
 
             ShotgunRed = new KeyCodeField(ShotgunContainer, "Shotgun (Sawed On)", "ShotES3", KeyCode.None);
-            RevovlerRed.fieldColor = variantColors[2];
+            ShotgunRed.fieldColor = variantColors[2];
 
 
             // Nailgun \\
@@ -151,5 +152,6 @@ namespace Easy_Swap
 
         }
 
+        
     }
 }

@@ -1,12 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
-using GameConsole.Commands;
-using HarmonyLib;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.Device;
-using UnityEngine.SceneManagement;
 
 namespace Easy_Swap
 {
@@ -22,41 +18,16 @@ namespace Easy_Swap
         public const string VersionString = "1.3.0";
 
 
-        // Enums
-
-
-        enum Guns
-        {
-            RevovlerBlue = 11,
-            RevovlerGreen = 12,
-            RevovlerRed = 13,
-
-            ShotgunBlue = 21,
-            ShotgunGreen = 22,
-            ShotgunRed = 23,
-
-            NailgunBlue = 31,
-            NailgunGreen = 32,
-            NailgunRed = 33,
-
-            RailBlue = 41,
-            RailGreen = 42,
-            RailRed = 43,
-
-            RocketBlue = 51,
-            RocketGreen = 52,
-            RocketRed = 53
-        }
-
-
 
         public static string AssemblyFolder = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
 
         public static ManualLogSource Log = new ManualLogSource(PluginName);
 
 
+
+
         // Equip the specified weapon (plus variant)
-        private static void EquipWeapon(Guns WeaponEnum)
+        public static void EquipWeapon(Swap.Guns WeaponEnum)
         {
 
 
@@ -64,7 +35,7 @@ namespace Easy_Swap
 
             #region
 
-            if (WeaponEnum == Guns.RevovlerBlue)
+            if (WeaponEnum == Swap.Guns.RevovlerBlue)
             {
                 // Revovler Blue
 
@@ -77,7 +48,7 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverPierce[num].ToAsset(), true);
 
             }
-            else if (WeaponEnum == Guns.RevovlerGreen)
+            else if (WeaponEnum == Swap.Guns.RevovlerGreen)
             {
 
                 // Revovler Green \\\
@@ -90,7 +61,7 @@ namespace Easy_Swap
 
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverRicochet[num].ToAsset(), true);
             }
-            else if (WeaponEnum == Guns.RevovlerRed)
+            else if (WeaponEnum == Swap.Guns.RevovlerRed)
             {
 
                 // Revovler Red
@@ -110,7 +81,7 @@ namespace Easy_Swap
 
             #region
 
-            if (WeaponEnum == Guns.ShotgunBlue)
+            if (WeaponEnum == Swap.Guns.ShotgunBlue)
             {
                 // Shotgun Blue
 
@@ -123,7 +94,7 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunGrenade[num].ToAsset(), true);
 
             }
-            else if (WeaponEnum == Guns.ShotgunGreen)
+            else if (WeaponEnum == Swap.Guns.ShotgunGreen)
             {
 
                 // Shotgun Green
@@ -136,7 +107,7 @@ namespace Easy_Swap
 
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunPump[num].ToAsset(), true);
             }
-            else if (WeaponEnum == Guns.ShotgunRed)
+            else if (WeaponEnum == Swap.Guns.ShotgunRed)
             {
 
                 // Shotgun Red
@@ -157,7 +128,7 @@ namespace Easy_Swap
 
             #region
 
-            if (WeaponEnum == Guns.NailgunBlue)
+            if (WeaponEnum == Swap.Guns.NailgunBlue)
             {
                 // Nailgun Blue
 
@@ -170,7 +141,7 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.nailMagnet[num].ToAsset(), true);
 
             }
-            else if (WeaponEnum == Guns.NailgunGreen)
+            else if (WeaponEnum == Swap.Guns.NailgunGreen)
             {
 
                 // Nailgun Green
@@ -183,7 +154,7 @@ namespace Easy_Swap
 
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.nailOverheat[num].ToAsset(), true);
             }
-            else if (WeaponEnum == Guns.NailgunRed)
+            else if (WeaponEnum == Swap.Guns.NailgunRed)
             {
 
                 // Nailgun Red
@@ -203,7 +174,7 @@ namespace Easy_Swap
 
             #region
 
-            if (WeaponEnum == Guns.RailBlue)
+            if (WeaponEnum == Swap.Guns.RailBlue)
             {
                 // Railcannon Blue
 
@@ -216,7 +187,7 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.railCannon[num].ToAsset(), true);
 
             }
-            else if (WeaponEnum == Guns.RailGreen)
+            else if (WeaponEnum == Swap.Guns.RailGreen)
             {
 
                 // Railcannon Green
@@ -229,7 +200,7 @@ namespace Easy_Swap
 
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.railHarpoon[num].ToAsset(), true);
             }
-            else if (WeaponEnum == Guns.RailRed)
+            else if (WeaponEnum == Swap.Guns.RailRed)
             {
 
                 // Railcannon Red
@@ -249,7 +220,7 @@ namespace Easy_Swap
 
             #region
 
-            if (WeaponEnum == Guns.RocketBlue)
+            if (WeaponEnum == Swap.Guns.RocketBlue)
             {
                 // Rocket Launcher Blue
 
@@ -262,7 +233,7 @@ namespace Easy_Swap
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.rocketBlue[num].ToAsset(), true);
 
             }
-            else if (WeaponEnum == Guns.RocketGreen)
+            else if (WeaponEnum == Swap.Guns.RocketGreen)
             {
 
                 // Rocket Launcher Green
@@ -275,7 +246,7 @@ namespace Easy_Swap
 
                 GunControl.Instance.ForceWeapon(GunSetter.Instance.rocketGreen[num].ToAsset(), true);
             }
-            else if (WeaponEnum == Guns.RocketRed)
+            else if (WeaponEnum == Swap.Guns.RocketRed)
             {
 
                 // Rocket Launcher Red
@@ -294,6 +265,7 @@ namespace Easy_Swap
         }
 
 
+        // Retrieve the variant colors from the players color customization settings
         public static Color[] GetVariantColors()
         {
 
@@ -313,38 +285,32 @@ namespace Easy_Swap
 
         }
 
-        // Initialize the mod, PluginConfigurator and assign the Keycode variables 
+
+
+
+        // "Initialize" the mod
 
         private void Awake()
         {
-
-
 
             Logger.LogInfo($"{PluginName},V{VersionString} is loading...");
 
             
 
-
-
-
-
+            // Sets up our static Log, so it can be used elsewhere in code.
+            Log = Logger;
 
 
             Logger.LogInfo($"{PluginName},V{VersionString} is loaded.");
-
-            // Sets up our static Log, so it can be used elsewhere in code.
-            // .e.g.
-            // Easy_SwapPlugin.Log.LogDebug("Debug Message to BepInEx log file");
-            Log = Logger;
         }
 
 
 
        
 
-        static bool configCreated = false;
+        bool configCreated = false;
 
-        // Runs Every Frame. Here we check if the player presses any of the keybinds assigned.
+        // Runs Every Frame. Here we check if the player presses any of the keybinds assigned, and initialize the plugin config if it hasnt.
         private void Update()
         {
 
@@ -355,188 +321,15 @@ namespace Easy_Swap
 
                 PluginConfig.InitConfig();
 
+                Log.LogInfo($"{PluginName},V{VersionString} Plugin Config is loaded.");
+
                 configCreated = true;
 
             }
 
             //// Input \\\\
 
-            if (MonoSingleton<OptionsManager>.Instance != null && MonoSingleton<NewMovement>.Instance != null)
-            {
-
-                
-
-                if (!MonoSingleton<OptionsManager>.Instance.inIntro && !MonoSingleton<OptionsManager>.Instance.paused && !MonoSingleton<NewMovement>.Instance.dead)
-
-                {
-
-                    /// Revovler \\\
-
-                    #region
-
-                    // Piercer (BLUE)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RevovlerBlue.value))
-                    {
-
-                        EquipWeapon(Guns.RevovlerBlue);
-
-                    }
-
-
-
-                    // Marksman (GREEN)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RevovlerGreen.value))
-                    {
-
-                        EquipWeapon(Guns.RevovlerGreen);
-
-                    }
-
-
-
-                    // Sharpshooter (RED)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RevovlerRed.value))
-                    {
-
-                        EquipWeapon(Guns.RevovlerRed);
-
-                    }
-
-                    #endregion
-
-
-                    /// Shotgun \\\
-
-                    #region
-
-                    // Core Eject (BLUE)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.ShotgunBlue.value))
-                    {
-
-                        EquipWeapon(Guns.ShotgunBlue);
-
-                    }
-
-                    // Pump (GREEN)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.ShotgunGreen.value))
-                    {
-
-                        EquipWeapon(Guns.ShotgunGreen);
-
-                    }
-
-                    // Sawed On (RED)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.ShotgunRed.value))
-                    {
-
-                        EquipWeapon(Guns.ShotgunRed);
-
-                    }
-
-
-                    #endregion
-
-
-                    /// Nailgun \\\
-
-                    #region
-
-                    // Attractor (BLUE)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.NailgunBlue.value))
-                    {
-
-                        EquipWeapon(Guns.NailgunBlue);
-
-                    }
-
-                    // Overheat (GREEN)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.NailgunGreen.value))
-                    {
-
-                        EquipWeapon(Guns.NailgunGreen);
-
-                    }
-
-                    // Jumpstart (RED)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.NailgunRed.value))
-                    {
-
-                        EquipWeapon(Guns.NailgunRed);
-
-                    }
-
-                    #endregion
-
-
-                    /// Railcannon \\\
-
-                    #region
-
-                    // Electric (BLUE)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RailcannonBlue.value))
-                    {
-
-                        EquipWeapon(Guns.RailBlue);
-
-                    }
-
-                    // Screwdriver (GREEN)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RailcannonGreen.value))
-                    {
-
-                        EquipWeapon(Guns.RailGreen);
-
-                    }
-
-                    // Malicious (RED)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RailcannonRed.value))
-                    {
-
-                        EquipWeapon(Guns.RailRed);
-
-                    }
-
-
-                    #endregion
-
-
-                    /// Rocket Launcher \\\
-
-                    #region
-
-                    // Freezeframe (BLUE)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RocketBlue.value))
-                    {
-
-                        EquipWeapon(Guns.RocketBlue);
-
-                    }
-
-                    // S.R.S (GREEN)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RocketGreen.value))
-                    {
-
-                        EquipWeapon(Guns.RocketGreen);
-
-                    }
-
-                    // Firestarter (RED)
-                    if (UnityInput.Current.GetKeyDown(PluginConfig.RocketRed.value))
-                    {
-
-                        EquipWeapon(Guns.RocketRed);
-
-                    }
-
-
-                    #endregion
-
-
-                }
-
-
-
-            }
+            Swap.SwapOnKeypress();
 
 
         }
