@@ -54,7 +54,7 @@ namespace Easy_Swap
                 // Revovler Green \\\
 
                 int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev1", 0) == 2)
+                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev2", 0) == 2)
                 {
                     num = 1;
                 }
@@ -67,7 +67,7 @@ namespace Easy_Swap
                 // Revovler Red
 
                 int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev2", 0) == 2)
+                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev1", 0) == 2)
                 {
                     num = 1;
                 }
