@@ -2,9 +2,11 @@
 using BepInEx.Logging;
 using System.IO;
 using System.Reflection;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using HarmonyLib;
+using PluginConfig.API.Fields;
 
 namespace EasySwap {
     [BepInPlugin(GUID, PluginName, VersionString)]
@@ -26,15 +28,15 @@ namespace EasySwap {
             AssetReference[] assetRef = null;
 
             switch (WeaponEnum) {
-                case Swap.Guns.RevovlerBlue:
+                case Swap.Guns.RevolverBlue:
                     weaponID = "rev0";
                     assetRef = GunSetter.Instance.revolverRicochet;
                     break;
-                case Swap.Guns.RevovlerGreen:
+                case Swap.Guns.RevolverGreen:
                     weaponID = "rev2";
                     assetRef = GunSetter.Instance.revolverPierce;
                     break;
-                case Swap.Guns.RevovlerRed:
+                case Swap.Guns.RevolverRed:
                     weaponID = "rev1";
                     assetRef = GunSetter.Instance.revolverTwirl;
                     break;
@@ -109,6 +111,7 @@ namespace EasySwap {
 
             // Sets up our static Log, so it can be used elsewhere in code.
             Log = Logger;
+            Harmony.CreateAndPatchAll(typeof(Plugin));
 
             Logger.LogInfo($"{PluginName},V{VersionString} is loaded.");
         }

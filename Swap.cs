@@ -4,9 +4,9 @@
 namespace EasySwap {
     public class Swap {
         public enum Guns {
-            RevovlerBlue = 10,
-            RevovlerRed = 11,
-            RevovlerGreen = 12,
+            RevolverBlue = 10,
+            RevolverRed = 11,
+            RevolverGreen = 12,
 
             ShotgunBlue = 20,
             ShotgunGreen = 21,
@@ -25,6 +25,14 @@ namespace EasySwap {
             RocketRed = 52
         }
 
+        public enum GunType {
+            Revolver = 10,
+            Shotgun = 20,
+            Nailgun = 30,
+            Rail = 40,
+            Rocket = 50
+        }
+
         // Swap to the appropriate weapon when the set bind is pressed
         public static void SwapOnKeypress() {
             if (
@@ -34,12 +42,12 @@ namespace EasySwap {
                 && !MonoSingleton<OptionsManager>.Instance.paused
                 && !MonoSingleton<NewMovement>.Instance.dead
             ) {
-                if (UnityInput.Current.GetKeyDown(PluginConfig.RevovlerBlue.value)) {
-                    Plugin.EquipWeapon(Guns.RevovlerBlue);
-                } else if (UnityInput.Current.GetKeyDown(PluginConfig.RevovlerGreen.value)) {
-                    Plugin.EquipWeapon(Guns.RevovlerGreen);
-                } else if (UnityInput.Current.GetKeyDown(PluginConfig.RevovlerRed.value)) {
-                    Plugin.EquipWeapon(Guns.RevovlerRed);
+                if (UnityInput.Current.GetKeyDown(PluginConfig.RevolverBlue.value)) {
+                    Plugin.EquipWeapon(Guns.RevolverBlue);
+                } else if (UnityInput.Current.GetKeyDown(PluginConfig.RevolverGreen.value)) {
+                    Plugin.EquipWeapon(Guns.RevolverGreen);
+                } else if (UnityInput.Current.GetKeyDown(PluginConfig.RevolverRed.value)) {
+                    Plugin.EquipWeapon(Guns.RevolverRed);
                 } else if (UnityInput.Current.GetKeyDown(PluginConfig.ShotgunBlue.value)) {
                     Plugin.EquipWeapon(Guns.ShotgunBlue);
                 } else if (UnityInput.Current.GetKeyDown(PluginConfig.ShotgunGreen.value)) {
