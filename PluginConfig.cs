@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 
 
-namespace Easy_Swap
+namespace EasySwap
 {
     public class PluginConfig
     {
@@ -64,9 +64,9 @@ namespace Easy_Swap
         public static void InitConfig()
         {
             var config = PluginConfigurator.Create("Easy Swap", Plugin.GUID);
-            config.SetIconWithURL($"{Path.Combine(Easy_Swap.Plugin.AssemblyFolder, "icon.png")}");
+            config.SetIconWithURL($"{Path.Combine(EasySwap.Plugin.AssemblyFolder, "icon.png")}");
 
-            
+
             /// Setting Keybinds \\\
 
             #region
@@ -152,6 +152,6 @@ namespace Easy_Swap
 
         }
 
-        
+
     }
 }

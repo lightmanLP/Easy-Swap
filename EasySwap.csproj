@@ -5,6 +5,8 @@
     <OutputType>Library</OutputType>
     <AssemblyName>EasySwap</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Publicizer" Version="2.3.0">

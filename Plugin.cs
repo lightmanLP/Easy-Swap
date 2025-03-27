@@ -3,335 +3,139 @@ using BepInEx.Logging;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using HarmonyLib;
 
-namespace Easy_Swap
-{
-
-
+namespace EasySwap {
     [BepInPlugin(GUID, PluginName, VersionString)]
-    public class Plugin : BaseUnityPlugin
-    {
-        // Mod Details
-
-        public const string GUID = "com.the_cat.Easy_Swap";
-        public const string PluginName = "Easy_Swap";
+    public class Plugin : BaseUnityPlugin {
+        public const string GUID = "com.the_cat.EasySwap";
+        public const string PluginName = "EasySwap";
         public const string VersionString = "1.3.0";
-
-
 
         public static string AssemblyFolder = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
 
         public static ManualLogSource Log = new ManualLogSource(PluginName);
 
-
-
+        protected bool _configCreated = false;
+        public bool configCreated { get => _configCreated; }
 
         // Equip the specified weapon (plus variant)
-        public static void EquipWeapon(Swap.Guns WeaponEnum)
-        {
+        public static void EquipWeapon(Swap.Guns WeaponEnum) {
+            string weaponID = null;
+            AssetReference[] assetRef = null;
 
+            switch (WeaponEnum) {
+                case Swap.Guns.RevovlerBlue:
+                    weaponID = "rev0";
+                    assetRef = GunSetter.Instance.revolverRicochet;
+                    break;
+                case Swap.Guns.RevovlerGreen:
+                    weaponID = "rev2";
+                    assetRef = GunSetter.Instance.revolverPierce;
+                    break;
+                case Swap.Guns.RevovlerRed:
+                    weaponID = "rev1";
+                    assetRef = GunSetter.Instance.revolverTwirl;
+                    break;
 
-            /// Revovler \\\
+                case Swap.Guns.ShotgunBlue:
+                    weaponID = "sho0";
+                    assetRef = GunSetter.Instance.shotgunGrenade;
+                    break;
+                case Swap.Guns.ShotgunGreen:
+                    weaponID = "sho1";
+                    assetRef = GunSetter.Instance.shotgunPump;
+                    break;
+                case Swap.Guns.ShotgunRed:
+                    weaponID = "sho2";
+                    assetRef = GunSetter.Instance.shotgunRed;
+                    break;
 
-            #region
+                case Swap.Guns.NailgunBlue:
+                    weaponID = "nai0";
+                    assetRef = GunSetter.Instance.nailMagnet;
+                    break;
+                case Swap.Guns.NailgunGreen:
+                    weaponID = "nai1";
+                    assetRef = GunSetter.Instance.nailOverheat;
+                    break;
+                case Swap.Guns.NailgunRed:
+                    weaponID = "nai2";
+                    assetRef = GunSetter.Instance.nailRed;
+                    break;
 
-            if (WeaponEnum == Swap.Guns.RevovlerBlue)
-            {
-                // Revovler Blue
+                case Swap.Guns.RailBlue:
+                    weaponID = "rai0";
+                    assetRef = GunSetter.Instance.railCannon;
+                    break;
+                case Swap.Guns.RailGreen:
+                    weaponID = "rai1";
+                    assetRef = GunSetter.Instance.railHarpoon;
+                    break;
+                case Swap.Guns.RailRed:
+                    weaponID = "rai2";
+                    assetRef = GunSetter.Instance.railMalicious;
+                    break;
 
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev0", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverPierce[num].ToAsset(), true);
-
-            }
-            else if (WeaponEnum == Swap.Guns.RevovlerGreen)
-            {
-
-                // Revovler Green \\\
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev2", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverRicochet[num].ToAsset(), true);
-            }
-            else if (WeaponEnum == Swap.Guns.RevovlerRed)
-            {
-
-                // Revovler Red
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rev1", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.revolverTwirl[num].ToAsset(), true);
-            }
-
-            #endregion
-
-            /// Shotgun \\\
-
-            #region
-
-            if (WeaponEnum == Swap.Guns.ShotgunBlue)
-            {
-                // Shotgun Blue
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "sho0", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunGrenade[num].ToAsset(), true);
-
-            }
-            else if (WeaponEnum == Swap.Guns.ShotgunGreen)
-            {
-
-                // Shotgun Green
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "sho1", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunPump[num].ToAsset(), true);
-            }
-            else if (WeaponEnum == Swap.Guns.ShotgunRed)
-            {
-
-                // Shotgun Red
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "sho2", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.shotgunRed[num].ToAsset(), true);
+                case Swap.Guns.RocketBlue:
+                    weaponID = "rock0";
+                    assetRef = GunSetter.Instance.rocketBlue;
+                    break;
+                case Swap.Guns.RocketGreen:
+                    weaponID = "rock1";
+                    assetRef = GunSetter.Instance.rocketGreen;
+                    break;
+                case Swap.Guns.RocketRed:
+                    weaponID = "rock2";
+                    assetRef = GunSetter.Instance.rocketRed;
+                    break;
             }
 
-            #endregion
-
-
-            /// Nailgun \\\
-
-            #region
-
-            if (WeaponEnum == Swap.Guns.NailgunBlue)
-            {
-                // Nailgun Blue
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "nai0", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.nailMagnet[num].ToAsset(), true);
-
-            }
-            else if (WeaponEnum == Swap.Guns.NailgunGreen)
-            {
-
-                // Nailgun Green
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "nai1", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.nailOverheat[num].ToAsset(), true);
-            }
-            else if (WeaponEnum == Swap.Guns.NailgunRed)
-            {
-
-                // Nailgun Red
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "nai2", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.nailRed[num].ToAsset(), true);
+            if (weaponID == null) {
+                Log.LogError($"Invalid weapon!");
+                return;
             }
 
-            #endregion
-
-            /// Railcannon \\\
-
-            #region
-
-            if (WeaponEnum == Swap.Guns.RailBlue)
-            {
-                // Railcannon Blue
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rai0", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.railCannon[num].ToAsset(), true);
-
-            }
-            else if (WeaponEnum == Swap.Guns.RailGreen)
-            {
-
-                // Railcannon Green
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rai1", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.railHarpoon[num].ToAsset(), true);
-            }
-            else if (WeaponEnum == Swap.Guns.RailRed)
-            {
-
-                // Railcannon Red
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rai2", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.railMalicious[num].ToAsset(), true);
-            }
-
-            #endregion
-
-            /// Rocket Launcher \\\ 
-
-            #region
-
-            if (WeaponEnum == Swap.Guns.RocketBlue)
-            {
-                // Rocket Launcher Blue
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rock0", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.rocketBlue[num].ToAsset(), true);
-
-            }
-            else if (WeaponEnum == Swap.Guns.RocketGreen)
-            {
-
-                // Rocket Launcher Green
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rock1", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.rocketGreen[num].ToAsset(), true);
-            }
-            else if (WeaponEnum == Swap.Guns.RocketRed)
-            {
-
-                // Rocket Launcher Red
-
-                int num = 0;
-                if (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + "rock2", 0) == 2)
-                {
-                    num = 1;
-                }
-
-                GunControl.Instance.ForceWeapon(GunSetter.Instance.rocketRed[num].ToAsset(), true);
-            }
-
-            #endregion
+            int num = (MonoSingleton<PrefsManager>.Instance.GetInt("weapon." + weaponID, 0) == 2) ? 1 : 0;
+            GunControl.Instance.ForceWeapon(assetRef[num].ToAsset(), true);
+        }
 
         }
 
+        // "Initialize" the mod
+        private void Awake() {
+            Logger.LogInfo($"{PluginName},V{VersionString} is loading...");
+
+            // Sets up our static Log, so it can be used elsewhere in code.
+            Log = Logger;
+
+            Logger.LogInfo($"{PluginName},V{VersionString} is loaded.");
+        }
 
         // Retrieve the variant colors from the players color customization settings
-        public static Color[] GetVariantColors()
-        {
-
-            
-
+        public static Color[] GetVariantColors() {
             Color[] variantColors = MonoSingleton<ColorBlindSettings>.Instance.variationColors;
 
             Color blue = new Color(variantColors[0].r, variantColors[0].g, variantColors[0].b);
             Color green = new Color(variantColors[1].r, variantColors[1].g, variantColors[1].b);
             Color red = new Color(variantColors[2].r, variantColors[2].g, variantColors[2].b);
 
-
-            Color[] colors = {blue,green,red };
-
+            Color[] colors = {blue, green, red};
             return colors;
-
-
         }
 
-
-
-
-        // "Initialize" the mod
-
-        private void Awake()
-        {
-
-            Logger.LogInfo($"{PluginName},V{VersionString} is loading...");
-
-            
-
-            // Sets up our static Log, so it can be used elsewhere in code.
-            Log = Logger;
-
-
-            Logger.LogInfo($"{PluginName},V{VersionString} is loaded.");
-        }
-
-
-
-       
-
-        bool configCreated = false;
-
-        // Runs Every Frame. Here we check if the player presses any of the keybinds assigned, and initialize the plugin config if it hasnt.
-        private void Update()
-        {
-
-            //// Plugin Config Init \\\\
-
-            if (configCreated == false && MonoSingleton<ColorBlindSettings>.Instance != null)
-            {
-
+        // Runs Every Frame. Here we check if the player presses any of the keybinds assigned.
+        private void Update() {
+            // Create config
+            if (!_configCreated && MonoSingleton<ColorBlindSettings>.Instance != null) {
                 PluginConfig.InitConfig();
-
                 Log.LogInfo($"{PluginName},V{VersionString} Plugin Config is loaded.");
-
-                configCreated = true;
-
+                _configCreated = true;
             }
 
-            //// Input \\\\
-
+            // Input
             Swap.SwapOnKeypress();
-
-
         }
 
 
