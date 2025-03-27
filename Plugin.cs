@@ -103,6 +103,91 @@ namespace EasySwap {
             GunControl.Instance.ForceWeapon(assetRef[num].ToAsset(), true);
         }
 
+        static int prevSlot;
+        static int prevVariation;
+
+        [HarmonyPatch(typeof(GunControl), nameof(GunControl.SwitchWeapon))]
+        [HarmonyPrefix]
+        static void SwitchWeaponPrePatch(
+            int targetSlotIndex,
+            int? targetVariationIndex,
+            bool useRetainedVariation,
+            bool cycleSlot,
+            bool cycleVariation,
+            GunControl __instance
+        ) {
+            prevSlot = __instance.currentSlotIndex;
+            prevVariation = __instance.currentVariationIndex;
+        }
+
+        [HarmonyPatch(typeof(GunControl), nameof(GunControl.SwitchWeapon))]
+        [HarmonyPostfix]
+        static void SwitchWeaponPostPatch(
+            int targetSlotIndex,
+            int? targetVariationIndex,
+            bool useRetainedVariation,
+            bool cycleSlot,
+            bool cycleVariation,
+            GunControl __instance
+        ) {
+            List<BoolField> data = null;
+            string weaponID = null;
+            switch (__instance.currentSlotIndex) {
+                case 1:
+                    data = PluginConfig.RevolverRotEnabled;
+                    weaponID = "rev";
+                    break;
+                case 2:
+                    data = PluginConfig.ShotgunRotEnabled;
+                    weaponID = "sho";
+                    break;
+                case 3:
+                    data = PluginConfig.NailgunRotEnabled;
+                    weaponID = "nai";
+                    break;
+                case 4:
+                    data = PluginConfig.RailRotEnabled;
+                    weaponID = "rai";
+                    break;
+                case 5:
+                    data = PluginConfig.RocketRotEnabled;
+                    weaponID = "rock";
+                    break;
+            }
+
+            if (data == null) { return; }
+
+            string order = MonoSingleton<PrefsManager>.Instance.GetString($"weapon.{weaponID}.order", "1234");
+            int variation = order.IndexOf((char)('1' + __instance.currentVariationIndex));
+
+            if (!data[variation].value) {
+                bool reverse;
+                if (__instance.currentVariationIndex == -1) {
+                    reverse = true;
+                } else if (prevSlot != __instance.currentSlotIndex) {
+                    reverse = false;
+                } else {
+                    switch (__instance.currentVariationIndex - prevVariation) {
+                        case -1:
+                            reverse = true;
+                            break;
+                        case 1:
+                            reverse = false;
+                            break;
+                        case 0:
+                            return;
+                        default:
+                            reverse = true;
+                            break;
+                    }
+                }
+
+                if (reverse) {
+                    __instance.SwitchWeapon(__instance.currentSlotIndex, __instance.currentVariationIndex - 1, false, false, false);
+                } else {
+                    __instance.SwitchWeapon(__instance.currentSlotIndex, null, false, false, true);
+                }
+            }
         }
 
         // "Initialize" the mod
