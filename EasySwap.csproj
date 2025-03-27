@@ -46,8 +46,7 @@
   <!-- broken somehow?
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ULTRAKILL_PATH)\BepInEx\plugins\$(TargetName)"</PostBuildEvent>
-    <PostBuildEvent>xcopy /q /y /i "$(TargetPath)"</PostBuildEvent>
-    <PostBuildEvent>"$(ULTRAKILL_PATH)\BepInEx\plugins\$(TargetName)" /E /H /C</PostBuildEvent>
+    <PostBuildEvent>xcopy /q /y /i "$(TargetPath)" "$(ULTRAKILL_PATH)\BepInEx\plugins\$(TargetName)" /E /H /C</PostBuildEvent>
   </PropertyGroup>
   -->
 </Project>
